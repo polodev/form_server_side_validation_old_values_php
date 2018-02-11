@@ -3,6 +3,11 @@
 function is_email ($email) {
   return preg_match("/.+@.+\..+/", $email) ;
 }
+function is_email_exists($email) {
+  return false ;
+   // $user = User::where('email', $email)->first();
+   // return !empty($user);
+}
 $errors = [];
 $old_values = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,11 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors['name'] = "name value can't be less than 4 character";
     $old_values['name'] = $name;
   }
-  if (strlen($email) < 4) {
+ if (strlen($email) < 4) {
     $errors['email'] = "email value can't be less than 4 character";
     $old_values['email'] = $email;
   } else if (!is_email($email)) {
     $errors['email'] = "provided email is not valid email";
+    $old_values['email'] = $email;
+  } else if (is_email_exists($email)) {
+    $errors['email'] = "email already exist in database";
     $old_values['email'] = $email;
   }
   

@@ -8,6 +8,15 @@ function is_email ($email) {
 }
 ~~~
 
+checking email exists or not inside database 
+
+~~~php
+function is_email_exists($email) {
+   $user = User::where('email', $email)->first();
+   return !empty($user);
+}
+~~~
+
 initialization  `$errors` and `$old_values` array for keeping track old value and errors  
 ~~~php
 $errors = [];
